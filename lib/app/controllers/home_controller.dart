@@ -4,20 +4,20 @@ import 'package:moedas/app/models/currency_model.dart';
 class HomeController {
   List<CurrencyModel>? currencies;
 
-  TextEditingController toText = TextEditingController();
-  TextEditingController fromText = TextEditingController();
+  final TextEditingController? toText;
+  final TextEditingController? fromText;
 
   CurrencyModel? toCurrency;
   CurrencyModel? fromCurrency;
 
-  HomeController() {
+  HomeController({this.toText, this.fromText}) {
     currencies = CurrencyModel.getCurrencies();
     toCurrency = currencies?[0];
     fromCurrency = currencies?[1];
   }
 
   void convert() {
-    String text = toText.text;
+    String text = toText!.text;
     double value = double.tryParse(text) ?? 1.0;
     double returnValue = 0;
 
@@ -30,6 +30,6 @@ class HomeController {
     } else if (fromCurrency?.name == 'Bitcoin') {
       returnValue = value * toCurrency!.bitcoin!;
     }
-    fromText.text = returnValue.toStringAsFixed(2);
+    fromText!.text = returnValue.toStringAsFixed(2);
   }
 }
